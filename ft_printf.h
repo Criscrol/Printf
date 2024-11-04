@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+# define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <unistd.h>
+# include <stdarg.h>
+# include <unistd.h>
 
-int ft_printf(const char *format, ...);
-int ft_printstr(char *str, int count);
-int ft_printhex(unsigned long n, int count, char format);
-int ft_printchar(char c, int count);
-int ft_printnbr(int n, int count);
-int ft_printunsnbr(unsigned int n, int count);
+int		ft_printf(const char *format, ...);
+int		ft_putchar(char c);
+int		ft_putstr(char *s);
+int		ft_putnbr(int n);
+int		ft_putunbr(unsigned int n);
+int		ft_puthex(unsigned long n, int uppercase);
+int		ft_putptr(void *ptr);
 
 #endif
-

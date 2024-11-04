@@ -11,28 +11,29 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
-
-SRC = ft_printf.c \
-      print_utils.c
-
-OBJ = $(SRC:.c=.o)
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+AR = ar
+ARFLAGS = rcs
+RM = rm -f
+
+SRCS = ft_printf.c ft_utils1.c ft_utils2.c
+OBJS = $(SRCS:.c=.o)
+HEADER = ft_printf.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	ar rcs $@ $^
+$(NAME): $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
 
-%.o: %.c
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

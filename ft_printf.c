@@ -12,61 +12,42 @@
 
 #include "ft_printf.h"
 
-static int	ft_handle_pointer(size_t adr, int q)
+static int	handle_format(char specifier, va_list args)
 {
-	if (!adr)
-		q = ft_printstr("(nil)", q);
-	else
-	{
-		q = ft_printstr("0x", q);
-		q = ft_printhex(adr, q, 'x');
-	}
-	return (q);
+	if (specifier == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	else if (specifier == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (specifier == 'p')
+		return (ft_putptr(va_arg(args, void *)));
+	else if (specifier == 'd' || specifier == 'i')
+		return (ft_putnbr(va_arg(args, int)));
+	else if (specifier == 'u')
+		return (ft_putunbr(va_arg(args, unsigned int)));
+	else if (specifier == 'x')
+		return (ft_puthex(va_arg(args, unsigned int), 0));
+	else if (specifier == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), 1));
+	else if (specifier == '%')
+		return (ft_putchar('%'));
+	return (0);
 }
 
-static int	ft_handle_format(char d, va_list list, int q)
+int	ft_printf(const char *format, ...)
 {
-	if (d == 'c')
-		q = (ft_printchar(va_arg(list, int), q));
-	else if (d == 's')
-		q = (ft_printstr(va_arg(list, char *), q));
-	else if (d == 'p')
-		q = ft_handle_pointer(va_arg(list, size_t), q);
-	else if (d == 'i' || d == 'd')
-		q = ft_printnbr(va_arg(list, int), q);
-	else if (d == 'u')
-		q = ft_printunsnbr(va_arg(list, unsigned int), q);
-	else if (d == 'x')
-		q = (ft_printhex(va_arg(list, unsigned int), q, 'x'));
-	else if (d == 'X')
-		q = (ft_printhex(va_arg(list, unsigned int), q, 'X'));
-	else if (d == '%')
-		q = (ft_printchar('%', q));
-	return (q);
-}
+	va_list	args;
+	int		count;
 
-int	ft_printf(char const *str, ...)
-{
-	va_list	list;
-	int		i;
-	int		q;
-
-	va_start(list, str);
-	i = 0;
-	q = 0;
-	while (str[i])
+	count = 0;
+	va_start(args, format);
+	while (*format)
 	{
-		if (str[i] == '%')
-		{
-			i++;
-			q = ft_handle_format(str[i], list, q);
-		}
+		if (*format == '%')
+			count += handle_format(*(++format), args);
 		else
-		{
-			q = ft_printchar(str[i], q);
-		}
-		i++;
+			count += ft_putchar(*format);
+		format++;
 	}
-	va_end(list);
-	return (q);
+	va_end(args);
+	return (count);
 }
