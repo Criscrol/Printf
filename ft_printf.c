@@ -56,15 +56,17 @@ int	ft_printf(const char *format, ...)
 #include <stdio.h>
 
 int main() {
-    int entero = 10;
-    float decimal = 5.5;
-    char caracter = 'A';
-    const char *cadena = "Hola, mundo!";
-
-    printf("Número entero: %d\n", entero);
-    printf("Número decimal: %.2f\n", decimal);
-    printf("Carácter: %c\n", caracter);
-    printf("Cadena: %s\n", cadena);
+    char c = 'A';
+    char *str = "Hello World";
+    
+    ft_printf("Character: %c\n", c);
+    ft_printf("String: %s\n", str);
+    ft_printf("Pointer: %p\n", &c);
+    ft_printf("Decimal: %d\n", -12345);
+    ft_printf("Unsigned: %u\n", 12345);
+    ft_printf("Hexadecimal (lowercase): %x\n", 255);
+    ft_printf("Hexadecimal (uppercase): %X\n", 255);
+    ft_printf("Percentage: %%\n");
 
     return 0;
 }*/
